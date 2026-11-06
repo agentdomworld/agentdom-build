@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bean Hall — Coffee in Portland</title>
+<meta name="description" content="Bean Hall is a neighborhood coffee shop in Portland. See our drinks menu, opening hours and how to find us.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#3b2418; --roast:#6b3a22; --caramel:#c8742f; --honey:#e9a94b;
+    --cream:#fbf3e6; --latte:#f1e0c5; --ink:#2a1a12; --muted:#6e5646;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6}
+  a{color:inherit}
+  .skip{position:absolute;left:-999px;top:0;background:var(--espresso);color:#fff;padding:.6rem 1rem;z-index:10}
+  .skip:focus{left:1rem}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 1.25rem}
+  header.nav{position:sticky;top:0;z-index:5;background:rgba(59,36,24,.96);color:var(--cream)}
+  header.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-family:Fraunces,serif;font-weight:800;font-size:1.4rem;text-decoration:none;letter-spacing:.3px}
+  .logo span{color:var(--honey)}
+  nav ul{list-style:none;display:flex;gap:1.25rem}
+  nav a{text-decoration:none;font-weight:500;font-size:.95rem;opacity:.9}
+  nav a:hover,nav a:focus-visible{opacity:1;color:var(--honey)}
+  .hero{background:radial-gradient(circle at 80% 20%,rgba(233,169,75,.35),transparent 55%),linear-gradient(135deg,var(--espresso),var(--roast) 60%,var(--caramel));color:var(--cream);padding:6rem 0 5rem}
+  .hero h1{font-family:Fraunces,serif;font-weight:800;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.08;max-width:14ch}
+  .hero p{font-size:1.15rem;max-width:46ch;margin:1.2rem 0 2rem;color:#f6e6cf}
+  .btns{display:flex;flex-wrap:wrap;gap:.8rem}
+  .btn{display:inline-block;padding:.85rem 1.4rem;border-radius:999px;font-weight:600;text-decoration:none;transition:transform .15s,background .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:var(--honey);color:var(--espresso)}
+  .btn-ghost{border:2px solid var(--latte);color:var(--cream)}
+  .btn:focus-visible,a:focus-visible{outline:3px solid var(--honey);outline-offset:3px}
+  section{padding:4.5rem 0}
+  h2{font-family:Fraunces,serif;font-size:clamp(1.8rem,4vw,2.6rem);color:var(--espresso);margin-bottom:.4rem}
+  .lead{color:var(--muted);margin-bottom:2.2rem}
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.1rem;list-style:none}
+  .item{background:#fff;border:1px solid var(--latte);border-radius:16px;padding:1.3rem 1.4rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:0 4px 14px rgba(59,36,24,.06)}
+  .icon{flex:0 0 48px;height:48px;border-radius:12px;background:var(--latte);display:grid;place-items:center;font-size:1.5rem}
+  .item h3{font-size:1.08rem;display:flex;justify-content:space-between;gap:1rem;color:var(--espresso)}
+  .price{color:var(--caramel);font-weight:600;white-space:nowrap}
+  .item p{color:var(--muted);font-size:.94rem}
+  .item>div{flex:1}
+  #hours{background:var(--latte)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(59,36,24,.06)}
+  th,td{padding:.85rem 1.2rem;text-align:left;border-bottom:1px solid var(--latte)}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  th{font-weight:600;color:var(--espresso)}
+  td{text-align:right;color:var(--muted)}
+  tr.today{background:#fdf0dc}
+  tr.today th::after{content:" · today";color:var(--caramel);font-weight:500;font-size:.85rem}
+  .status{display:inline-block;margin-top:1rem;padding:.4rem .9rem;border-radius:999px;font-weight:600;font-size:.9rem;background:#fff}
+  .status.open{color:#2f6b2f}.status.closed{color:#9a3b1e}
+  .visit{background:linear-gradient(135deg,var(--roast),var(--caramel));color:var(--cream);border-radius:20px;padding:2rem}
+  .visit h3{font-family:Fraunces,serif;font-size:1.6rem;margin-bottom:.5rem}
+  .visit p{margin-bottom:1.4rem;color:#fbe9d2}
+  footer{background:var(--espresso);color:var(--latte);padding:2rem 0;font-size:.9rem;text-align:center}
+  @media (max-width:720px){
+    nav ul{gap:.9rem}
+    nav li.hide-sm{display:none}
+    .two{grid-template-columns:1fr}
+    .hero{padding:4.5rem 0 4rem}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top">Bean<span>Hall</span></a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#hours">Hours</a></li>
+        <li class="hide-sm"><a href="#visit">Visit</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="wrap">
+      <h1>Slow-roasted warmth, poured in Portland.</h1>
+      <p>Bean Hall is your neighborhood coffee house — small-batch beans, honest pastries and a big table for lingering on rainy afternoons.</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#menu">See the menu</a>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Bean+Hall+coffee+Portland+OR" target="_blank" rel="noopener">Find us on the map</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" aria-labelledby="menu-h">
+    <div class="wrap">
+      <h2 id="menu-h">The Menu</h2>
+      <p class="lead">Six favorites, made to order. Oat, almond and whole milk always available.</p>
+      <ul class="menu-grid">
+        <li class="item"><div class="icon" aria-hidden="true">☕</div><div><h3>House Drip <span class="price">$3.50</span></h3><p>Our rotating Pacific Northwest roast, brewed fresh every 30 minutes.</p></div></li>
+        <li class="item"><div class="icon" aria-hidden="true">🥛</div><div><h3>Hall Latte <span class="price">$5.00</span></h3><p>Double espresso with silky steamed milk and a heart on top.</p></div></li>
+        <li class="item"><div class="icon" aria-hidden="true">🍯</div><div><h3>Honey Lavender Latte <span class="price">$5.75</span></h3><p>Local honey and lavender syrup, gently floral and sweet.</p></div></li>
+        <li class="item"><div class="icon" aria-hidden="true">🍫</div><div><h3>Mocha Ember <span class="price">$5.50</span></h3><p>Dark chocolate, espresso and a pinch of smoked sea salt.</p></div></li>
+        <li class="item"><div class="icon" aria-hidden="true">🧊</div><div><h3>Cold Brew <span class="price">$4.75</span></h3><p>Steeped 18 hours for a smooth, low-acid, chocolatey finish.</p></div></li>
+        <li class="item"><div class="icon" aria-hidden="true">🍵</div><div><h3>Chai Hearth <span class="price">$5.25</span></h3><p>House-spiced black tea chai with cinnamon, cardamom and ginger.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="hours" aria-labelledby="hours-h">
+    <div class="wrap two">
+      <div>
+        <h2 id="hours-h">Opening Hours</h2>
+        <p class="lead">Come early, stay late(ish).</p>
+        <table aria-label="Opening hours">
+          <tbody>
+            <tr data-day="1"><th scope="row">Monday</th><td>7:00 am – 6:00 pm</td></tr>
+            <tr data-day="2"><th scope="row">Tuesday</th><td>7:00 am – 6:00 pm</td></tr>
+            <tr data-day="3"><th scope="row">Wednesday</th><td>7:00 am – 6:00 pm</td></tr>
+            <tr data-day="4"><th scope="row">Thursday</th><td>7:00 am – 6:00 pm</td></tr>
+            <tr data-day="5"><th scope="row">Friday</th><td>7:00 am – 7:00 pm</td></tr>
+            <tr data-day="6"><th scope="row">Saturday</th><td>8:00 am – 7:00 pm</td></tr>
+            <tr data-day="0"><th scope="row">Sunday</th><td>8:00 am – 4:00 pm</td></tr>
+          </tbody>
+        </table>
+        <p id="status" class="status" role="status" hidden></p>
+      </div>
+      <div class="visit" id="visit">
+        <h3>Visit Bean Hall</h3>
+        <p>We're in Portland, Oregon. Tap below to get directions straight to our door — bring a friend, a book, or both.</p>
+        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=Bean+Hall+coffee+Portland+OR" target="_blank" rel="noopener">Open in Google Maps ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr">2025</span> Bean Hall · Portland, Oregon · Brewed with care.</div>
+</footer>
+
+<script>
+(function(){
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  // Hours in Portland local time: [open, close] in minutes from midnight
+  var hours = {0:[480,960],1:[420,1080],2:[420,1080],3:[420,1080],4:[420,1080],5:[420,1140],6:[480,1140]};
+  try{
+    var parts = new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',weekday:'short',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date());
+    var get = function(t){for(var i=0;i<parts.length;i++){if(parts[i].type===t)return parts[i].value;}};
+    var day = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(get('weekday'));
+    var mins = (parseInt(get('hour'),10)%24)*60 + parseInt(get('minute'),10);
+    var row = document.querySelector('tr[data-day="'+day+'"]');
+    if(row) row.classList.add('today');
+    var h = hours[day], el = document.getElementById('status');
+    var open = mins >= h[0] && mins < h[1];
+    el.textContent = open ? '● Open now (Portland time)' : '● Closed now (Portland time)';
+    el.className = 'status ' + (open ? 'open' : 'closed');
+    el.hidden = false;
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
