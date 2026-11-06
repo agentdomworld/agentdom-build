@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tip Calculator</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f3f5f7;color:#1d2430}
+main{background:#fff;width:min(340px,92vw);padding:24px;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08)}
+h1{font-size:1.2rem;margin:0 0 18px}
+label{display:block;font-size:.85rem;color:#556;margin:14px 0 6px}
+input[type=number]{width:100%;padding:10px;font-size:1rem;border:1px solid #cfd6de;border-radius:8px}
+input[type=number]:focus,button:focus-visible{outline:2px solid #2a7de1;outline-offset:1px}
+input[type=number]:focus{border-color:transparent}
+input[type=range]{width:100%;accent-color:#2a7de1}
+.row{display:flex;justify-content:space-between;align-items:center}
+output.pct{font-weight:600}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.quick button{padding:8px 0;font:inherit;font-size:.9rem;border:1px solid #cfd6de;border-radius:8px;background:#fff;color:#1d2430;cursor:pointer}
+.quick button:hover{border-color:#2a7de1}
+.quick button[aria-pressed=true]{background:#2a7de1;border-color:#2a7de1;color:#fff;font-weight:600}
+.res{margin-top:20px;background:#1d2430;color:#fff;border-radius:10px;padding:14px 16px}
+.res div{display:flex;justify-content:space-between;padding:4px 0}
+.res span:last-child{font-weight:700;font-variant-numeric:tabular-nums}
+.res .big span:last-child{font-size:1.4rem}
+small{display:block;margin-top:10px;color:#889;font-size:.75rem;text-align:center}
+</style>
+</head>
+<body>
+<main>
+<h1>Tip Calculator</h1>
+<label for="bill">Bill amount</label>
+<input id="bill" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00">
+<div class="row"><label for="tip">Tip</label><output class="pct" id="pct" for="tip">15%</output></div>
+<input id="tip" type="range" min="0" max="30" step="1" value="15">
+<div class="quick" role="group" aria-label="Quick tip percentages">
+<button type="button" data-p="10">10%</button>
+<button type="button" data-p="15">15%</button>
+<button type="button" data-p="18">18%</button>
+<button type="button" data-p="20">20%</button>
+</div>
+<label for="people">Number of people</label>
+<input id="people" type="number" min="1" step="1" value="1" inputmode="numeric">
+<section class="res" aria-live="polite">
+<div><span>Tip / person</span><span id="tipPP">0.00</span></div>
+<div class="big"><span>Total / person</span><span id="totPP">0.00</span></div>
+<div><span>Total tip</span><span id="tipAll">0.00</span></div>
+</section>
+<small>Rounded to 2 decimals</small>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const btns=document.querySelectorAll('.quick button');
+const fmt=n=>n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+function calc(){
+  const bill=Math.max(0,parseFloat($('bill').value)||0);
+  const pct=parseInt($('tip').value,10);
+  const ppl=Math.max(1,Math.floor(parseFloat($('people').value)||1));
+  $('pct').textContent=pct+'%';
+  btns.forEach(b=>b.setAttribute('aria-pressed',+b.dataset.p===pct));
+  const tip=bill*pct/100;
+  $('tipPP').textContent=fmt(tip/ppl);
+  $('totPP').textContent=fmt((bill+tip)/ppl);
+  $('tipAll').textContent=fmt(tip);
+}
+btns.forEach(b=>b.addEventListener('click',()=>{$('tip').value=b.dataset.p;calc();}));
+['bill','tip','people'].forEach(id=>$(id).addEventListener('input',calc));
+calc();
+</script>
+</body>
+</html>
